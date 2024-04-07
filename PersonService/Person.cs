@@ -4,26 +4,11 @@ namespace PersonService
 {
     public class Person
     {
-        private string _name = ""; // Initialized to "", so it's not null
-        private int _age;
-        private string _position = "";
-
-        public string Name
+        public Person()
         {
-            get => _name;
-            set => _name = value;
-        }
-
-        public int Age
-        {
-            get => _age;
-            set => _age = value;
-        }
-
-        public string Position
-        {
-            get => _position;
-            set => _position = value;
+            Name = "";
+            Age = -1;
+            Position = "";
         }
 
         public Person(string name, int age, string position)
@@ -32,12 +17,16 @@ namespace PersonService
             Age = age;
             Position = position;
         }
-
+        
+        public string Name { get; set; }
+        public int Age { get; set; }
+        public string Position { get; set; }
+        
         public string ToJson()
         {
             return JsonSerializer.Serialize(this);
         }
-
+        
         // We should make this function static, because we won't have an object of this class
         // when we're creating a new one from a json string.
         public static Person FromJson(string json)
@@ -45,5 +34,6 @@ namespace PersonService
             // The ! is the Null-Forgiving Operator 
             return JsonSerializer.Deserialize<Person>(json)!;
         }
+        
     }
 }
