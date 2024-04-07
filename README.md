@@ -16,7 +16,7 @@ From your C# folder (where your other projects are) run the following:
 	cd TestNameTestTestBlah
 	dotnet new classlib -o MyClassName
 	dotnet sln add ./MyClassName/MyClassName.csproj
-	dotnet new xunit -o MyClassName.Tests
+	dotnet new mstest -o MyClassName.Tests
 	dotnet add ./MyClassName.Tests/MyClassName.Tests.csproj reference ./MyClassName/MyClassName.csproj
 	dotnet sln add ./MyClassName.Tests.csproj
 
