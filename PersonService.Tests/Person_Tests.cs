@@ -3,11 +3,28 @@ namespace PersonService.Tests
     [TestClass]
     public class PersonServiceClassTest
     {
+        private Person person;
+        [TestInitialize]
+        public void Setup()
+        {
+            person = new Person();
+        }
+
+        [TestCleanup]
+        public void TearDown()
+        {
+            person = null;
+        }
+        
         [TestMethod]
         public void PersonInitialTest()
         {
             // Setup
-            Person person = new Person("John", 29, "Programmer");
+
+            person.Name = "John";
+            person.Age = 29;
+            person.Position = "Programmer";
+            
             string expectedName = "John";
             int expectedAge = 29;
             string expectedPosition = "Programmer";
@@ -20,17 +37,20 @@ namespace PersonService.Tests
         [TestMethod]
         public void PersonJsonTest()
         {
-            var ozzie = new Person("Ozzie", 28, "Second Base");
-            string actualOzzieJson = ozzie.ToJson();
-
-            string eddieJson = "{\"Name\":\"Eddie\",\"Age\":32,\"Position\":\"Left Field\"}";
-            var eddie = Person.FromJson(eddieJson);
-
             string expectedOzzieJson = "{\"Name\":\"Ozzie\",\"Age\":28,\"Position\":\"Second Base\"}";
-            var expectedEddie = new Person("Eddie", 32, "Left Field");
-
+            var expectedAustin = new Person("Austin", 27, "Third Base");
+            
+            person.Name = "Ozzie";
+            person.Age = 28;
+            person.Position = "Second Base";
+            
+            string actualOzzieJson = person.ToJson();
             Assert.AreEqual(expectedOzzieJson, actualOzzieJson);
-            Assert.AreEqual(expectedEddie.ToJson(), eddie.ToJson());
+
+            
+            string austinJson = "{\"Name\":\"Austin\",\"Age\":27,\"Position\":\"Third Base\"}";
+            person = Person.FromJson(austinJson);
+            Assert.AreEqual(expectedAustin.ToJson(), person.ToJson());
         }
     }        
 }
